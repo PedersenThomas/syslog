@@ -22,8 +22,8 @@ class _Syslog extends Syslog {
     String pri = '<$priority>'; 
     int version = 1;
     String time = timestamp != null ? '${new DateTime.now()} ': '';
-    String host = hostname == null ? '' : '$hostname ';
-    String app = appname == null ? '' : '$appname ';
+    String host = hostname == null || appname == ''  ? '' : '$hostname ';
+    String app = appname == null || appname == '' ? '' : '$appname ';
     String procId = processId != null ? '$processId ' : '';
     String msgId = messageId != null ? '$messageId ' : '';
     
