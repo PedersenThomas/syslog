@@ -21,19 +21,19 @@ class _Syslog extends Syslog {
     ////PRI             = "<" PRIVAL ">"
     String pri = '<$priority>'; 
     int version = 1;
-    String time = timestamp != null ? new DateTime.now().toString(): '';
-    String host = hostname == null ? '' : hostname;
-    String app = appname == null ? '' : appname;
-    String procId = processId != null ? processId.toString() : '';
-    String msgId = messageId != null ? messageId.toString() : '';
+    String time = timestamp != null ? '${new DateTime.now()} ': '';
+    String host = hostname == null ? '' : '$hostname ';
+    String app = appname == null ? '' : '$appname ';
+    String procId = processId != null ? '$processId ' : '';
+    String msgId = messageId != null ? '$messageId ' : '';
     
     //HEADER          = PRI VERSION SP TIMESTAMP SP HOSTNAME SP APP-NAME SP PROCID SP MSGID
-    String header = '$pri$version $time $host $app $procId $msgId';
+    String header = '$pri$version $time$host$app$procId$msgId';
     String STRUCTURED_DATA = '';
     String Msg = 'TestingDart${new DateTime.now()}';
 
     //SYSLOG-MSG      = HEADER SP STRUCTURED-DATA [SP MSG]
-    String sysMsg = '$header $STRUCTURED_DATA $Msg';
+    String sysMsg = '$header$STRUCTURED_DATA$Msg';
     if(sysMsg.length > 65000) {
       throw('Message to long');
     }
