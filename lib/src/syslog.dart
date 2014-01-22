@@ -22,7 +22,7 @@ class _Syslog extends Syslog {
     String pri = '<$priority>'; 
     int version = 1;
     String time = timestamp != null ? '${new DateTime.now()} ': '';
-    String host = hostname == null || appname == ''  ? '' : '$hostname ';
+    String host = hostname == null || hostname == ''  ? '' : '$hostname ';
     String app = appname == null || appname == '' ? '' : '$appname ';
     String procId = processId != null ? '$processId ' : '';
     String msgId = messageId != null ? '$messageId ' : '';
@@ -30,13 +30,13 @@ class _Syslog extends Syslog {
     //HEADER          = PRI VERSION SP TIMESTAMP SP HOSTNAME SP APP-NAME SP PROCID SP MSGID
     String header = '$pri$version $time$host$app$procId$msgId';
     String STRUCTURED_DATA = '';
-    String Msg = 'TestingDart${new DateTime.now()}';
 
     //SYSLOG-MSG      = HEADER SP STRUCTURED-DATA [SP MSG]
-    String sysMsg = '$header$STRUCTURED_DATA$Msg';
+    String sysMsg = '$header$STRUCTURED_DATA$message';
     if(sysMsg.length > 65000) {
       throw('Message to long');
     }
+    print(sysMsg);
     _socket.send(sysMsg.codeUnits, _hostname, _port);
   }
   
