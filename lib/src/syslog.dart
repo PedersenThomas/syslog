@@ -13,11 +13,11 @@ class _Syslog extends Syslog {
   static Future<Syslog> open (hostname, String name, int flags, {int port: 514}) { 
     const int randomPort = 0;
     return RawDatagramSocket.bind(hostname, randomPort)
-        .then((RawDatagramSocket value) => new _Syslog(value, hostname, port));
+        .then((RawDatagramSocket socket) => new _Syslog(socket, hostname, port));
   }
   
-  void log(int facility, int level, String message) {
-    int priority = _Syslog._priority(facility, facility);
+  void log(int facility, int Severity, String message) {
+    int priority = _Syslog._priority(facility, Severity);
     int version = 1;
     String timestamp = '2014-01-19T19:29:53';
     String hostname = '127.0.0.1';
@@ -31,7 +31,7 @@ class _Syslog extends Syslog {
     if(sysMsg.length > 65000) {
       throw('Message to long');
     }
-    socket.send(sysMsg.codeUnits, socket.address, socket.port);
+    socket.send(sysMsg.codeUnits, _hostname, _port);
   }
   
   void close() {
