@@ -16,17 +16,23 @@ class _Syslog extends Syslog {
         .then((RawDatagramSocket socket) => new _Syslog(socket, hostname, port));
   }
   
-  void log(int facility, int Severity, String message) {
+  void log(int facility, int Severity, String message, {DateTime timestamp, int processId, int messageId, String hostname : '', String appname: ''}) {
     int priority = _Syslog._priority(facility, Severity);
+    ////PRI             = "<" PRIVAL ">"
+    String pri = '<$priority>'; 
     int version = 1;
-    String timestamp = '2014-01-19T19:29:53';
-    String hostname = '127.0.0.1';
-    String app_name = 'dartSys';
-    String procId = '9080';
-    String msgId = '1';
-    String header = '<$priority>$version $timestamp $hostname $app_name $procId $msgId';
+    String time = timestamp != null ? new DateTime.now().toString(): '';
+    String host = hostname == null ? '' : hostname;
+    String app = appname == null ? '' : appname;
+    String procId = processId != null ? processId.toString() : '';
+    String msgId = messageId != null ? messageId.toString() : '';
+    
+    //HEADER          = PRI VERSION SP TIMESTAMP SP HOSTNAME SP APP-NAME SP PROCID SP MSGID
+    String header = '$pri$version $time $host $app $procId $msgId';
     String STRUCTURED_DATA = '';
     String Msg = 'TestingDart${new DateTime.now()}';
+
+    //SYSLOG-MSG      = HEADER SP STRUCTURED-DATA [SP MSG]
     String sysMsg = '$header $STRUCTURED_DATA $Msg';
     if(sysMsg.length > 65000) {
       throw('Message to long');

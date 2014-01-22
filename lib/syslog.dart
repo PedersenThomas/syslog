@@ -20,7 +20,7 @@ abstract class Syslog {
   /**
    * Performs a syslog to the currently bound syslog host.
    */
-  void log(int facility, int level, String message);
+  void log(int facility, int level, String message, {DateTime timestamp, int processId, int messageId, String hostname : '', String appname: ''});
   
   /**
    * Closes the socket to the syslog server.
