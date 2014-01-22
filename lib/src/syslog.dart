@@ -31,7 +31,7 @@ class _Syslog extends Syslog {
     if(sysMsg.length > 65000) {
       throw('Message to long');
     }
-    socket.send(sysMsg.codeUnits, _hostname, _port);
+    _socket.send(sysMsg.codeUnits, _hostname, _port);
   }
   
   void close() {

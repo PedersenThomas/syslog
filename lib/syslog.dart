@@ -8,9 +8,7 @@ part 'src/syslog.dart';
 /**
  * Connects to a syslog, over UDP.
  */
-abstract class Syslog {  
-  RawDatagramSocket socket;
-    
+abstract class Syslog {    
   /**
    * Binds the Syslog class to a specified host for further logging.
    * See the Syslog constructor for details on the parameters.
