@@ -1,5 +1,7 @@
 part of syslog;
 
+DateFormat _format = new DateFormat('MMM d HH:mm:ss');
+
 class _Syslog extends Syslog {
   RawDatagramSocket _socket;
   int _port;
@@ -16,27 +18,19 @@ class _Syslog extends Syslog {
         .then((RawDatagramSocket socket) => new _Syslog(socket, hostname, port));
   }
   
-  void log(int facility, int Severity, String message, {DateTime timestamp, int processId, int messageId, String hostname : '', String appname: ''}) {
+  void log(int facility, int Severity, String message, {DateTime timestamp, String hostname : '', String appname: ''}) {
     int priority = _Syslog._priority(facility, Severity);
-    ////PRI             = "<" PRIVAL ">"
-    String pri = '<$priority>'; 
-    int version = 1;
-    String time = timestamp != null ? '${new DateTime.now()} ': '';
-    String host = hostname == null || hostname == ''  ? '' : '$hostname ';
-    String app = appname == null || appname == '' ? '' : '$appname ';
-    String procId = processId != null ? '$processId ' : '';
-    String msgId = messageId != null ? '$messageId ' : '';
+    String trimmedHostname = hostname.trim();
+    String trimmedAppname = appname.trim();
     
-    //HEADER          = PRI VERSION SP TIMESTAMP SP HOSTNAME SP APP-NAME SP PROCID SP MSGID
-    String header = '$pri$version $time$host$app$procId$msgId';
-    String STRUCTURED_DATA = '';
-
-    //SYSLOG-MSG      = HEADER SP STRUCTURED-DATA [SP MSG]
-    String sysMsg = '$header$STRUCTURED_DATA$message';
-    if(sysMsg.length > 65000) {
+    String time = timestamp != null ? '${_format.format(timestamp)} ': _format.format(new DateTime.now());
+    String host = hostname == null || trimmedHostname == ''  ? '' : '${trimmedHostname} ';
+    String app = appname == null || trimmedAppname == '' ? '' : '${trimmedAppname} ';
+    
+    String sysMsg = '<${priority}>${time} ${host} ${app}[${pid}]: ${message}';
+    if(sysMsg.length > 2048) {
       throw('Message to long');
     }
-    print(sysMsg);
     _socket.send(sysMsg.codeUnits, _hostname, _port);
   }
   

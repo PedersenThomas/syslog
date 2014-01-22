@@ -3,6 +3,8 @@ library syslog;
 import 'dart:async';
 import 'dart:io';
 
+import 'package:intl/intl.dart';
+
 part 'src/syslog.dart';
 
 /**
@@ -20,7 +22,7 @@ abstract class Syslog {
   /**
    * Performs a syslog to the currently bound syslog host.
    */
-  void log(int facility, int level, String message, {DateTime timestamp, int processId, int messageId, String hostname : '', String appname: ''});
+  void log(int facility, int level, String message, {DateTime timestamp, String hostname : '', String appname: ''});
   
   /**
    * Closes the socket to the syslog server.
