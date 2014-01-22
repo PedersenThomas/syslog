@@ -25,7 +25,7 @@ class _Syslog extends Syslog {
     
     String time = timestamp != null ? '${_format.format(timestamp)} ': _format.format(new DateTime.now());
     String host = hostname == null || trimmedHostname == ''  ? '' : '${trimmedHostname} ';
-    String app = appname == null || trimmedAppname == '' ? '' : '${trimmedAppname} ';
+    String app = appname == null || trimmedAppname == '' ? '' : '${trimmedAppname}';
     
     String sysMsg = '<${priority}>${time} ${host} ${app}[${pid}]: ${message}';
     if(sysMsg.length > 2048) {
