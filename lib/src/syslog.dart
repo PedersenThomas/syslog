@@ -23,7 +23,7 @@ class _Syslog extends Syslog {
     String trimmedHostname = hostname.trim();
     String trimmedAppname = appname.trim();
     
-    String time = timestamp != null ? '${_format.format(timestamp)} ': _format.format(new DateTime.now());
+    String time = timestamp != null ? '${_format.format(timestamp)} ': '${_format.format(new DateTime.now())} ';
     String host = hostname == null || trimmedHostname == ''  ? '' : '${trimmedHostname} ';
     String app = appname == null || trimmedAppname == '' ? '' : '${trimmedAppname}';
     
