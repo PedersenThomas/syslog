@@ -27,8 +27,8 @@ class _Syslog extends Syslog {
     String host = hostname == null || trimmedHostname == ''  ? '' : '${trimmedHostname} ';
     String app = appname == null || trimmedAppname == '' ? '' : '${trimmedAppname}';
     
-    String sysMsg = '<${priority}>${time} ${host} ${app}[${pid}]: ${message}';
-    if(sysMsg.length > 2048) {
+    String sysMsg = '<${priority}>${time}${host}${app}[${pid}]: ${message}';
+    if(sysMsg.length > 1024) {
       throw('Message to long');
     }
     _socket.send(sysMsg.codeUnits, _hostname, _port);
