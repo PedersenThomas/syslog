@@ -5,16 +5,16 @@ DateFormat _format = new DateFormat('MMM d HH:mm:ss');
 class _Syslog extends Syslog {
   RawDatagramSocket _socket;
   int _port;
-  var _hostname;
+  InternetAddress _hostname;
   
-  _Syslog(RawDatagramSocket socket, hostname, int port): 
+  _Syslog(RawDatagramSocket socket, InternetAddress hostname, int port): 
     _socket = socket, 
     _hostname = hostname, 
     _port = port;
   
-  static Future<Syslog> open (hostname, {int port: 514}) { 
+  static Future<Syslog> open (InternetAddress hostname, {int port: 514}) { 
     const int randomPort = 0;
-    return RawDatagramSocket.bind(hostname, randomPort)
+    return RawDatagramSocket.bind(InternetAddress.LOOPBACK_IP_V4, randomPort)
         .then((RawDatagramSocket socket) => new _Syslog(socket, hostname, port));
   }
   
