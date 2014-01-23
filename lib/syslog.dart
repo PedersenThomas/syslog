@@ -8,14 +8,13 @@ import 'package:intl/intl.dart';
 part 'src/syslog.dart';
 
 /**
- * Connects to a syslog, over UDP.
+ * Sends log messages over UDP to a syslog server.
  */
 abstract class Syslog {    
   /**
    * Binds the Syslog class to a specified host for further logging.
-   * See the Syslog constructor for details on the parameters.
    */
-  static Future<Syslog> open(hostname, String name, int flags ) => _Syslog.open(hostname, name, flags);
+  static Future<Syslog> open(hostname, {int port: 514}) => _Syslog.open(hostname, port: port);
   
   /**
    * Performs a syslog to the currently bound syslog host.

@@ -12,7 +12,7 @@ class _Syslog extends Syslog {
     _hostname = hostname, 
     _port = port;
   
-  static Future<Syslog> open (hostname, String name, int flags, {int port: 514}) { 
+  static Future<Syslog> open (hostname, {int port: 514}) { 
     const int randomPort = 0;
     return RawDatagramSocket.bind(hostname, randomPort)
         .then((RawDatagramSocket socket) => new _Syslog(socket, hostname, port));
