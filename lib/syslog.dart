@@ -5,7 +5,7 @@ import 'dart:io';
 
 import 'package:intl/intl.dart';
 
-part 'src/syslog.dart';
+part 'package:syslog/src/syslog.dart';
 
 /**
  * Sends log messages over UDP to a syslog server.
