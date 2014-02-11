@@ -19,16 +19,23 @@ class _Syslog extends Syslog {
   }
   
   void log(int facility, int Severity, String message, {DateTime timestamp, String hostname : '', String appname: ''}) {
-    int priority = _Syslog._priority(facility, Severity);
-    String trimmedHostname = hostname.trim();
-    String trimmedAppname = appname.trim();
-    
     String time = timestamp != null ? '${_format.format(timestamp)} ': '${_format.format(new DateTime.now())} ';
-    String host = hostname == null || trimmedHostname == ''  ? '' : '${trimmedHostname} ';
-    String app = appname == null || trimmedAppname == '' ? '' : '${trimmedAppname}';
+    int priority = _Syslog._priority(facility, Severity);
+    String host = '';
+    String app = '';
+    
+    if(hostname != null) {
+      String trimmedHostname = hostname.trim();
+      host = trimmedHostname == ''  ? '' : '${trimmedHostname} ';
+    }
+    
+    if(appname != null) {
+      String trimmedAppname = appname.trim();
+      app = trimmedAppname == '' ? '' : '${trimmedAppname}';
+    }
     
     String sysMsg = '<${priority}>${time}${host}${app}[${pid}]: ${message}';
-    if(sysMsg.length > 1024) {
+    if(sysMsg.length > 2048) {
       throw('Message to long');
     }
     _socket.send(sysMsg.codeUnits, _hostname, _port);
