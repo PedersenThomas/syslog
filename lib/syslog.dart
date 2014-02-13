@@ -14,7 +14,7 @@ abstract class Syslog {
   /**
    * Binds the Syslog class to a specified host for further logging.
    */
-  static Future<Syslog> open(hostname, {int port: 514}) => _Syslog.open(hostname, port: port);
+  static Future<Syslog> open(String hostname, {int port: 514}) => _Syslog.open(hostname, port: port);
   
   /**
    * Performs a syslog to the currently bound syslog host.
