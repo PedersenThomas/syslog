@@ -1,6 +1,6 @@
 name: syslog
+version: 0.1.16
 author: Thomas Pedersen
-version: 0.1.15
 description: A library for logging to a syslog server.
 environment:
   sdk: '>=1.1.1'

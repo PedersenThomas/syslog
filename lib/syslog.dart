@@ -10,17 +10,17 @@ part 'package:syslog/src/syslog.dart';
 /**
  * Sends log messages over UDP to a syslog server.
  */
-abstract class Syslog {    
+abstract class Syslog {
   /**
    * Binds the Syslog class to a specified host for further logging.
    */
   static Future<Syslog> open(String hostname, {int port: 514}) => _Syslog.open(hostname, port: port);
-  
+
   /**
-   * Performs a syslog to the currently bound syslog host.
+   * Logs to the currently bound syslog host.
    */
-  void log(int facility, int level, String message, {DateTime timestamp, String hostname, String appname});
-  
+  void log(int facility, int level, message, {DateTime timestamp, String hostname, String appname});
+
   /**
    * Closes the socket to the syslog server.
    */
